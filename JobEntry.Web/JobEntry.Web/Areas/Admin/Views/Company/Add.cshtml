@@ -1,0 +1,32 @@
+﻿@model CreateCompanyDto
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <h5 class="card-header">Create Job</h5>
+            <div class="card-body">
+                <form method="post" asp-controller="Company" asp-action="Add" enctype="multipart/form-data">
+                    
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Name</label>
+                        <input type="text" class="form-control" asp-for="Name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Description</label>
+                        <textarea rows="4" cols="3" class="form-control" asp-for="Description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Photo" class="form-label"></label>
+                        <input asp-for="Photo" class="form-control" accept="image/*" type="file">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary w-100">Save</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

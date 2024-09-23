@@ -1,0 +1,59 @@
+﻿@model CreateJobDto
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <h5 class="card-header">Create Job</h5>
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly"></div>
+                <form method="post" asp-controller="Job" asp-action="Add" enctype="multipart/form-data">
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Companies</label>
+                        <select id="companies-list" class="form-control" 
+                        asp-for="CompanyId" 
+                         asp-items="@(new SelectList(Model.Companies,"Id","Name"))">
+                        </select>
+                        
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Name</label>
+                        <input type="text" class="form-control" asp-for="Name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Description</label>
+                        <textarea rows="4" cols="3"  class="form-control" asp-for="Description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Location</label>
+                        <input type="text" class="form-control" asp-for="Location">
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Salary Start</label>
+                            <input type="number" class="form-control" asp-for="SalaryStart">
+                            <span asp-validation-for="SalaryStart" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Salary End</label>
+                            <input type="number" class="form-control" asp-for="SalaryEnd">
+                            <span asp-validation-for="SalaryEnd" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Dateline</label>
+                        <input type="date" class="form-control" asp-for="DateLine">
+                        <span asp-validation-for="DateLine" class="text-danger"></span>
+                    </div>
+                  
+                    <div class="form-group">
+                        <button class="btn btn-primary w-100">Save</button>
+                    </div>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
