@@ -14,7 +14,7 @@ namespace JobEntry.Entity.DTOs.Job
         public DateTime? DeletedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
         public decimal SalaryStart { get; set; }

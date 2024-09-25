@@ -53,7 +53,7 @@ namespace JobEntry.Web.Areas.Admin.Controllers
             }
 
             var createdJobresponse = await _jobService.CreateJobAsync(model);
-            _toastNotification.AddSuccessToastMessage(NotifyMessage.Job.Create(model.Name));
+            _toastNotification.AddSuccessToastMessage(NotifyMessage.Job.Create(model.Title));
             return RedirectToAction("Index", "Job", new { Area = "Admin" });
            
         }
@@ -79,7 +79,7 @@ namespace JobEntry.Web.Areas.Admin.Controllers
 
             }
             var response = await _jobService.UpdateJobAsync(model);
-            _toastNotification.AddSuccessToastMessage(NotifyMessage.Job.Update(model.Name));
+            _toastNotification.AddSuccessToastMessage(NotifyMessage.Job.Update(model.Title));
             return RedirectToAction("Index", "Job", new { Area = "Admin" });
            
         }
@@ -87,7 +87,7 @@ namespace JobEntry.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             var deleteResponse =  await _jobService.DeleteAsync(Guid.Parse(id));
-            _toastNotification.AddSuccessToastMessage(NotifyMessage.Job.Delete(deleteResponse.Data.Name));
+            _toastNotification.AddSuccessToastMessage(NotifyMessage.Job.Delete(deleteResponse.Data.Title));
             return RedirectToAction("Index", "Job", new { Area = "Admin" });
         }
         

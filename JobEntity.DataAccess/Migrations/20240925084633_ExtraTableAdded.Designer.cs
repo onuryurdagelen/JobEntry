@@ -4,6 +4,7 @@ using JobEntity.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobEntity.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240925084633_ExtraTableAdded")]
+    partial class ExtraTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -482,6 +484,9 @@ namespace JobEntity.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("EducationLevelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -499,6 +504,10 @@ namespace JobEntity.DataAccess.Migrations
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("PositionId")
                         .HasColumnType("uniqueidentifier");
@@ -519,10 +528,6 @@ namespace JobEntity.DataAccess.Migrations
                     b.Property<Guid?>("SectorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("WorkPreferenceId")
                         .HasColumnType("uniqueidentifier");
 
@@ -536,6 +541,8 @@ namespace JobEntity.DataAccess.Migrations
                     b.HasIndex("CriterionId");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("EducationLevelId");
 
                     b.HasIndex("JobLanguageId");
 
@@ -565,21 +572,6 @@ namespace JobEntity.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("JobLanguages");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.LocationType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LocationTypes");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.MilitaryStatus", b =>
@@ -992,6 +984,10 @@ namespace JobEntity.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("DepartmentId");
 
+                    b.HasOne("JobEntry.Entity.Entities.EducationLevel", "EducationLevel")
+                        .WithMany()
+                        .HasForeignKey("EducationLevelId");
+
                     b.HasOne("JobEntry.Entity.Entities.JobLanguage", "JobLanguage")
                         .WithMany()
                         .HasForeignKey("JobLanguageId");
@@ -1021,6 +1017,8 @@ namespace JobEntity.DataAccess.Migrations
                     b.Navigation("Criterion");
 
                     b.Navigation("Department");
+
+                    b.Navigation("EducationLevel");
 
                     b.Navigation("JobLanguage");
 

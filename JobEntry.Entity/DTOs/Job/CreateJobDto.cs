@@ -10,7 +10,7 @@ namespace JobEntry.Entity.DTOs.Job
 {
     public class CreateJobDto
     {
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
         public decimal SalaryStart { get; set; }

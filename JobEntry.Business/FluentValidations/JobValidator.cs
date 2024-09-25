@@ -12,7 +12,7 @@ namespace JobEntry.Business.FluentValidations
     {
         public JobValidator()
         {
-            RuleFor(x => x.Name)
+            RuleFor(x => x.Title)
                 .NotEmpty()
                 .NotNull()
                 .MinimumLength(3);
@@ -22,10 +22,20 @@ namespace JobEntry.Business.FluentValidations
                 .NotNull()
                 .MinimumLength(3);
 
-            RuleFor(x => x.Location)
+            RuleFor(x => x.Country)
                 .NotEmpty()
                 .NotNull()
                 .MinimumLength(3);
+
+            RuleFor(x => x.Province)
+                .NotEmpty()
+                .NotNull()
+                .MinimumLength(3);
+
+            RuleFor(x => x.District)
+               .NotEmpty()
+               .NotNull()
+               .MinimumLength(3);
 
             RuleFor(x => x.SalaryStart)
                 .NotEmpty()

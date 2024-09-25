@@ -11,7 +11,7 @@
             <table class="table table-striped table-bordered" id="table-jobs">
                 <thead class="table-light">
                     <tr>
-                        <th>Name</th>
+                        <th>Title</th>
                         <th>Location</th>
                         <th>Salary(Start-End)</th>
                         <th>Dateline</th>
@@ -24,7 +24,7 @@
                     @foreach (var job in Model)
                     {
                         <tr data-id="@job.Id">
-                            <td>@job.Name</td>
+                            <td>@job.Title</td>
                             <td>@job.Location</td>
                             <td>$@job.SalaryStart - $@job.SalaryEnd</td>
                             <td>@job.DateLine.ToString("MM/dd/yyyy")</td>
@@ -44,7 +44,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Name</th>
+                        <th>Title</th>
                         <th>Location</th>
                         <th>Salary</th>
                         <th>Dateline</th>

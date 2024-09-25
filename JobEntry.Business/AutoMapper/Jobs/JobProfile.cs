@@ -13,7 +13,8 @@ namespace JobEntry.Business.AutoMapper.Jobs
     {
         public JobProfile()
         {
-            CreateMap<JobDto,Job>().ReverseMap();
+            CreateMap<JobDto,Job>()
+                .ReverseMap().ForMember(dest => dest.Location,opt => opt.MapFrom(src => $"{src.District}, {src.Province}, {src.Country}"));
             CreateMap<CreateJobDto,Job>().ReverseMap();
             CreateMap<UpdateJobDto,Job>().ReverseMap();
             CreateMap<JobDto,UpdateJobDto>().ReverseMap();

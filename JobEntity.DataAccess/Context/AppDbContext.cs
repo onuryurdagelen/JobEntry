@@ -25,6 +25,20 @@ namespace JobEntity.DataAccess.Context
         public DbSet<QualificationDetail> QualificationDetails { get; set; }
         public DbSet<Responsibility> Responsibilities { get; set; }
         public DbSet<ResponsibilityDetail> ResponsibilityDetails { get; set; }
+        public DbSet<WorkType> WorkTypes { get; set; }
+        public DbSet<WorkPreference> WorkPreferences { get; set; }
+        public DbSet<DrivingLicense> DrivingLicences { get; set; }
+        public DbSet<MilitaryStatus> MilitaryStatus { get; set; }
+        public DbSet<Experience> Experiences { get; set; }
+        public DbSet<Criterion> Criterions { get; set; }
+        public DbSet<JobLanguage> JobLanguages { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        public DbSet<EducationLevel> EducationLevels { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<PositionLevel> PositionLevels { get; set; }
+        public DbSet<Sector> Sectors { get; set; }
+        public DbSet<LocationType> LocationTypes { get; set; }
+
 
 
         public AppDbContext()
