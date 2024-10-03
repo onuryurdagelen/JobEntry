@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,10 @@ namespace JobEntity.DataAccess
 		{
 			services.AddDbContext<AppDbContext>(options =>
 			{
-				options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+				options.UseSqlServer(configuration.GetConnectionString("SqlServer"),option =>
+				{
+					option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
+				});
 				options.EnableSensitiveDataLogging();
 			});
 			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

@@ -25,7 +25,7 @@
                     {
                         <tr data-id="@job.Id">
                             <td>@job.Title</td>
-                            <td>@job.Location</td>
+                            <td>@(job.District) @(", ") @job.Province @(", ") @job.Country</td>
                             <td>$@job.SalaryStart - $@job.SalaryEnd</td>
                             <td>@job.DateLine.ToString("MM/dd/yyyy")</td>
                             <td>@job.Company.Name</td>

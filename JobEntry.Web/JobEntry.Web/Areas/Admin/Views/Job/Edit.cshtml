@@ -1,5 +1,5 @@
 ﻿@model UpdateJobDto
-
+<partial name="_ValidationScriptsPartial" />
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
@@ -27,9 +27,19 @@
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="defaultFormControlInput" class="form-label">Location</label>
-                        <input type="text" class="form-control" asp-for="Location">
-                        <span asp-validation-for="Location" class="text-danger"></span>
+                        <label for="defaultFormControlInput" class="form-label">Country</label>
+                        <input type="text" class="form-control" asp-for="Country">
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Province</label>
+                        <input type="text" class="form-control" asp-for="Province">
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">District</label>
+                        <input type="text" class="form-control" asp-for="District">
+                        <span asp-validation-for="District" class="text-danger"></span>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6 mb-3">
@@ -48,6 +58,121 @@
                         <input type="date" class="form-control" asp-for="DateLine">
                         <span asp-validation-for="DateLine" class="text-danger"></span>
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Work Type</label>
+                        <select id="companies-list" class="form-control"
+                                asp-for="WorkTypeId"
+                                asp-items="@(new SelectList(Model.WorkTypes,"Id","Name"))">
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Qualifications</label>
+                        <a class="btn text-primary float-end" id="add-qualification" data-title="Add Qualification">
+                            <i class="bx bx-plus"></i> Add Qualification
+                        </a>
+                        <div class="card w-100 mb-4">
+                            <ul class="list-group list-group-flush" id="qualification-list">
+                                @foreach (var qualification in Model.Qualifications)
+                                {
+                                    <li class="list-group-item d-flex flex-row" data-id="@qualification.Id">
+                                        <div class="col-md-10">
+                                            <p>@(qualification.Description.Length >= 150 ? qualification.Description.Substring(0, 150).Insert(150, "...") : qualification.Description)</p>
+                                        </div>
+                                        <div class="col-md-2 d-flex justify-content-end">
+                                            <button type="button" class="btn btn-primary btn-sm text-white edit-qualification" data-id="@qualification.Id" data-jobid="@Model.Id">
+                                                <i class="bx bxs-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm text-white delete-qualification" data-qid="@qualification.Id" data-jobid="@Model.Id">
+                                                <i class="bx bx-minus-circle"></i>
+                                            </button>
+                                        </div>
+                                    </li>
+                                }
+                           
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="modalPlaceholder"></div>
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Responsibilities</label>
+
+                        <a class="btn text-primary float-end" id="add-responsibility" data-title="Add Responsibility">
+                            <i class="bx bx-plus"></i> Add Responsibility
+                        </a>
+
+
+                        <div class="card w-100 mb-4">
+                            <ul class="list-group list-group-flush" id="responsibility-list">
+                                @foreach (var responsibility in Model.Responsibilities)
+                                {
+                                    <li class="list-group-item d-flex flex-row" data-id="@responsibility.Id">
+                                        <div class="col-md-10">
+                                            <p>@(responsibility.Description.Length >= 150 ? responsibility.Description.Substring(0, 150).Insert(150, "...") : responsibility.Description)</p>
+                                        </div>
+                                        <div class="col-md-2 d-flex justify-content-end">
+                                            <button type="button" class="btn btn-primary btn-sm text-white edit-responsibility" data-id="@responsibility.Id" data-jobid="@Model.Id">
+                                                <i class="bx bxs-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm text-white delete-responsibility" data-rid="@responsibility.Id" data-jobid="@Model.Id">
+                                                <i class="bx bx-minus-circle"></i>
+                                            </button>
+                                        </div>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Driving Licenses</label>
+                            @foreach (var drivingLicense in Model.Criterions.DrivingLicenses)
+                            {
+                                <div class="form-check form-check-inline d-block">
+                                    <input class="form-check-input" type="checkbox" name="SelectedDrivingLicenseIds" value="@drivingLicense.Id" @(Model.SelectedDrivingLicenseIds != null && Model.SelectedDrivingLicenseIds.Contains(drivingLicense.Id) ? "checked" : "") />
+                                    <label class="form-check-label" for="inlineCheckbox2">@drivingLicense.Name</label>
+                                </div>
+                            }
+
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Military Statuses</label>
+                            @foreach (var militaryStatus in Model.Criterions.MilitaryStatuses)
+                            {
+                                <div class="form-check form-check-inline d-block">
+                                    <input class="form-check-input" type="checkbox" name="SelectedMilitaryStatusIds" value="@militaryStatus.Id" @(Model.SelectedMilitaryStatusIds != null && Model.SelectedMilitaryStatusIds.Contains(militaryStatus.Id) ? "checked" : "") />
+                                    <label class="form-check-label" for="inlineCheckbox2">@militaryStatus.Name</label>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                   <div class="row">
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Experiences</label>
+                            @foreach (var experience in Model.Criterions.Experiences)
+                            {
+                                <div class="form-check form-check-inline d-block">
+                                    <input class="form-check-input" type="checkbox" name="SelectedExperienceIds" value="@experience.Id" @(Model.SelectedExperienceIds != null && Model.SelectedExperienceIds.Contains(experience.Id) ? "checked" : "") />
+                                    <label class="form-check-label" for="inlineCheckbox2">@experience.Name</label>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Education Levels</label>
+                            @foreach (var educationLevel in Model.Criterions.EducationLevels)
+                            {
+                                <div class="form-check form-check-inline d-block">
+                                        <input class="form-check-input" type="checkbox" name="SelectedEducationLevelIds" value="@educationLevel.Id" @(Model.SelectedEducationLevelIds != null && Model.SelectedEducationLevelIds.Contains(educationLevel.Id) ? "checked" : "")>
+                                        <label class="form-check-label" for="inlineCheckbox2">@educationLevel.Name</label>
+                                </div>
+                            }
+
+                        </div>
+                   </div>
 
                     <div class="form-group">
                         <button class="btn btn-primary w-100">Save</button>
@@ -58,3 +183,29 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Qualification Modal -->
+<div id="addQualificationModal-container" aria-hidden="true">
+    
+</div>
+<!-- Edit Responsibility Modal -->
+<div id="addResponsibilityModal-container" aria-hidden="true">
+   
+</div>
+
+
+@section Scripts {
+    <script>
+        var app = app || {};
+        app.Urls = app.Urls || {};
+        app.Urls.baseUrl = '@Url.Content("~")';
+        app.Urls.AddQualificationModalUrl = '@Url.Action(action: "AddQualificationPartial", controller: "Job")';
+        app.Urls.AddResponsibilityModalUrl = '@Url.Action(action: "AddResponsibilityPartial", controller: "Job")';
+        app.Urls.UpdateQualificationModalUrl = '@Url.Action(action: "UpdateQualificationPartial", controller: "Job")';
+        app.Urls.UpdateResponsibilityModalUrl = '@Url.Action(action: "UpdateResponsibilityPartial", controller: "Job")';
+        app.JobId = '@Model.Id';
+    </script>
+    <script src="~/js/utils.js" type="application/ecmascript"></script>
+    <script src="~/js/job.js" type="application/ecmascript"></script>
+
+}

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace JobEntry.Entity.Entities
 {
-	public class Responsibility:BaseEntity
+	public class Responsibility:IBaseEntity
 	{
+        public Guid Id { get; set; }
         public Responsibility()
         {
             
@@ -24,6 +25,5 @@ namespace JobEntry.Entity.Entities
 		public Guid JobId { get; set; }
 		public Job Job { get; set; } = null!;
 
-		public ICollection<ResponsibilityDetail> ResponsibilityDetails { get; set; } = new List<ResponsibilityDetail>();
     }
 }

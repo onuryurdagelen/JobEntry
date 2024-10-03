@@ -1,4 +1,5 @@
 ﻿using JobEntity.DataAccess.Context;
+using JobEntry.Business.Services.Concretes;
 using JobEntry.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
 using NToastNotify;
@@ -9,7 +10,7 @@ namespace JobEntry.Web
     {
         public static IServiceCollection LoadMvcServices(this IServiceCollection services,IConfiguration configuration)
         {
-
+			services.AddScoped<ViewRenderService>();
             //Identity Configuration
             services.AddIdentity<AppUser, AppRole>(options =>
 			{

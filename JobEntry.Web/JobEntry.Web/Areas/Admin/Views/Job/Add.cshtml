@@ -1,5 +1,5 @@
 ﻿@model CreateJobDto
-
+<partial name="_ValidationScriptsPartial" />
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
@@ -13,7 +13,6 @@
                         asp-for="CompanyId" 
                          asp-items="@(new SelectList(Model.Companies,"Id","Name"))">
                         </select>
-                        
                     </div>
                     <div class="form-group mb-3">
                         <label for="defaultFormControlInput" class="form-label">Name</label>
@@ -26,9 +25,19 @@
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="defaultFormControlInput" class="form-label">Location</label>
-                        <input type="text" class="form-control" asp-for="Location">
-                        <span asp-validation-for="Location" class="text-danger"></span>
+                        <label for="defaultFormControlInput" class="form-label">Country</label>
+                        <input type="text" class="form-control" asp-for="Country">
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
+                     <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Province</label>
+                        <input type="text" class="form-control" asp-for="Province">
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+                     <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">District</label>
+                        <input type="text" class="form-control" asp-for="District">
+                        <span asp-validation-for="District" class="text-danger"></span>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6 mb-3">
@@ -47,7 +56,61 @@
                         <input type="date" class="form-control" asp-for="DateLine">
                         <span asp-validation-for="DateLine" class="text-danger"></span>
                     </div>
-                  
+                    <div class="form-group mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Work Type</label>
+                        <select id="companies-list" class="form-control"
+                                asp-for="WorkTypeId"
+                                asp-items="@(new SelectList(Model.WorkTypes,"Id","Name"))">
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Driving Licenses</label>
+                        @foreach (var drivingLicense in Model.Criterions.DrivingLicenses)
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="SelectedDrivingLicenseIds" value="@drivingLicense.Id">
+                                <label class="form-check-label" for="inlineCheckbox2">@drivingLicense.Name</label>
+                            </div>
+                        }
+
+                    </div>
+                       
+                     <div class="form-group mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Military Statuses</label>
+                        @foreach (var militaryStatus in Model.Criterions.MilitaryStatuses)
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="SelectedMilitaryStatusIds" value="@militaryStatus.Id">
+                                <label class="form-check-label" for="inlineCheckbox2">@militaryStatus.Name</label>
+                            </div>
+                        }
+
+                    </div>
+                     
+                     <div class="form-group mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Experiences</label>
+                        @foreach (var experience in Model.Criterions.Experiences)
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="SelectedExperienceIds" value="@experience.Id">
+                                <label class="form-check-label" for="inlineCheckbox2">@experience.Name</label>
+                            </div>
+                        }
+                    </div>
+                      
+                     <div class="form-group mb-3">
+                            <label for="defaultFormControlInput" class="form-label">Education Levels</label>
+                        @foreach (var educationLevel in Model.Criterions.EducationLevels)
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="SelectedEducationLevelIds" value="@educationLevel.Id">
+                                <label class="form-check-label" for="inlineCheckbox2">@educationLevel.Name</label>
+                            </div>
+                        }
+
+                    </div>
+
                     <div class="form-group">
                         <button class="btn btn-primary w-100">Save</button>
                     </div>
@@ -57,3 +120,66 @@
         </div>
     </div>
 </div>
+
+<script>
+    // On page load, set the disabled state of the select based on the initial checkbox value
+    document.addEventListener('DOMContentLoaded', function() {
+        var militaryStatusCheckbox = document.getElementById('hasMilitaryStatusCheckbox');
+        var militaryStatusesSelectList = document.getElementById('militaryStatus-list');
+
+        var educationLevelCheckbox = document.getElementById('hasEducationLevelCheckbox');
+        var educationLevelsSelectList = document.getElementById('educationLevel-list');
+
+        var experiencesCheckbox = document.getElementById('hasExperienceCheckbox');
+        var experiencesSelectList = document.getElementById('experiences-list');
+
+         var drivingLicenseCheckbox = document.getElementById('hasDrivingLicenseCheckbox');
+        var drivingLicensesSelectList = document.getElementById('drivingLicense-list');
+
+
+        // Function to toggle the disabled state
+        function toggleSelect(type) {
+           
+            switch(type){
+                    case "military-status":
+                        militaryStatusesSelectList.disabled = !militaryStatusCheckbox.checked;
+                    break;
+                     case "education-level":
+                        educationLevelsSelectList.disabled = !educationLevelCheckbox.checked;
+                    break;
+                     case "experiences":
+                        experiencesSelectList.disabled = !experiencesCheckbox.checked;
+                    break;
+                     case "driving-license":
+                        drivingLicensesSelectList.disabled = !drivingLicenseCheckbox.checked;
+                    break;
+                    default:
+                        militaryStatusesSelectList.disabled = !militaryStatusCheckbox.checked;
+                        educationLevelsSelectList.disabled = !educationLevelCheckbox.checked;
+                        experiencesSelectList.disabled = !experiencesCheckbox.checked;
+                        drivingLicensesSelectList.disabled = !drivingLicenseCheckbox.checked;
+                    break;
+                }
+        }
+
+        // Call the function on page load
+        toggleSelect();
+
+        // Add change event listener for checkbox
+        militaryStatusCheckbox.addEventListener('change', function() {
+            toggleSelect("military-status");
+        })
+
+         educationLevelCheckbox.addEventListener('change', function() {
+            toggleSelect("education-level");
+        });
+
+         experiencesCheckbox.addEventListener('change', function() {
+            toggleSelect("experiences");
+        });
+
+         drivingLicenseCheckbox.addEventListener('change', function() {
+            toggleSelect("driving-license");
+        });
+    });
+</script>

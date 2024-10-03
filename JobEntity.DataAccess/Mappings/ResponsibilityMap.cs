@@ -13,7 +13,6 @@ namespace JobEntity.DataAccess.Mappings
 	{
 		public void Configure(EntityTypeBuilder<Responsibility> builder)
 		{
-			builder.Property(b => b.CreatedDate).ValueGeneratedOnAdd();
 		}
 	}
 }

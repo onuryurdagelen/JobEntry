@@ -18,8 +18,11 @@ namespace JobEntry.Business
 
 			services.AddScoped<ICompanyService, CompanyService>();
 			services.AddScoped<IJobService, JobService>();
-			services.AddScoped<IImageHelper,ImageHelper>();
-			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			services.AddScoped<ICriterionService, CriterionService>();
+            services.AddScoped<IImageHelper,ImageHelper>();
+			services.AddScoped<UserService>();
+			services.AddScoped<RoleService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace JobEntry.Entity.Entities
 {
-	public class Qualification:BaseEntity
+	public class Qualification:IBaseEntity
 	{
-
+        public Guid Id { get; set; }
         public Qualification()
         {
             
@@ -25,6 +25,5 @@ namespace JobEntry.Entity.Entities
 
         public Guid JobId { get; set; }
         public Job Job { get; set; } = null!;
-        public ICollection<QualificationDetail> QualificationDetails { get; set; } = new List<QualificationDetail>();
     }
 }

@@ -22,6 +22,66 @@ namespace JobEntity.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("CriterionDrivingLicenseManyToMany", b =>
+                {
+                    b.Property<Guid>("CriterionDrivingLicense_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DrivingLicense_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CriterionDrivingLicense_Id", "DrivingLicense_Id");
+
+                    b.HasIndex("DrivingLicense_Id");
+
+                    b.ToTable("CriterionDrivingLicenseManyToMany");
+                });
+
+            modelBuilder.Entity("CriterionEducationLevelManyToMany", b =>
+                {
+                    b.Property<Guid>("CriterionEducationLevel_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EducationLevel_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CriterionEducationLevel_Id", "EducationLevel_Id");
+
+                    b.HasIndex("EducationLevel_Id");
+
+                    b.ToTable("CriterionEducationLevelManyToMany");
+                });
+
+            modelBuilder.Entity("CriterionExperienceManyToMany", b =>
+                {
+                    b.Property<Guid>("CriterionExperience_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Experience_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CriterionExperience_Id", "Experience_Id");
+
+                    b.HasIndex("Experience_Id");
+
+                    b.ToTable("CriterionExperienceManyToMany");
+                });
+
+            modelBuilder.Entity("CriterionMilitaryStatusManyToMany", b =>
+                {
+                    b.Property<Guid>("CriterionMilitaryStatus_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MilitaryStatus_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CriterionMilitaryStatus_Id", "MilitaryStatus_Id");
+
+                    b.HasIndex("MilitaryStatus_Id");
+
+                    b.ToTable("CriterionMilitaryStatusManyToMany");
+                });
+
             modelBuilder.Entity("JobApplicants", b =>
                 {
                     b.Property<Guid>("Applicant_Id")
@@ -313,27 +373,7 @@ namespace JobEntity.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DrivingLicenseId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("EducationLevelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ExperienceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("MilitaryStatusId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("DrivingLicenseId");
-
-                    b.HasIndex("EducationLevelId");
-
-                    b.HasIndex("ExperienceId");
-
-                    b.HasIndex("MilitaryStatusId");
 
                     b.ToTable("Criterions");
                 });
@@ -594,7 +634,7 @@ namespace JobEntity.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MilitaryStatus");
+                    b.ToTable("MilitaryStatuses");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.Position", b =>
@@ -633,39 +673,16 @@ namespace JobEntity.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<Guid>("JobId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId")
-                        .IsUnique();
+                    b.HasIndex("JobId");
 
                     b.ToTable("Qualifications");
                 });
@@ -709,7 +726,7 @@ namespace JobEntity.DataAccess.Migrations
 
                     b.HasIndex("QualificationId");
 
-                    b.ToTable("QualificationDetails");
+                    b.ToTable("QualificationDetail");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.Responsibility", b =>
@@ -718,39 +735,16 @@ namespace JobEntity.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<Guid>("JobId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId")
-                        .IsUnique();
+                    b.HasIndex("JobId");
 
                     b.ToTable("Responsibilities");
                 });
@@ -794,7 +788,7 @@ namespace JobEntity.DataAccess.Migrations
 
                     b.HasIndex("ResponsibilityId");
 
-                    b.ToTable("ResponsibilityDetails");
+                    b.ToTable("ResponsibilityDetail");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.Sector", b =>
@@ -861,6 +855,74 @@ namespace JobEntity.DataAccess.Migrations
                         .HasFilter("[CompanyId] IS NOT NULL");
 
                     b.HasDiscriminator().HasValue("Employer");
+                });
+
+            modelBuilder.Entity("CriterionDrivingLicenseManyToMany", b =>
+                {
+                    b.HasOne("JobEntry.Entity.Entities.Criterion", null)
+                        .WithMany()
+                        .HasForeignKey("CriterionDrivingLicense_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_CriterionDrivingLicense_Id");
+
+                    b.HasOne("JobEntry.Entity.Entities.DrivingLicense", null)
+                        .WithMany()
+                        .HasForeignKey("DrivingLicense_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_DrivingLicense_Id");
+                });
+
+            modelBuilder.Entity("CriterionEducationLevelManyToMany", b =>
+                {
+                    b.HasOne("JobEntry.Entity.Entities.Criterion", null)
+                        .WithMany()
+                        .HasForeignKey("CriterionEducationLevel_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_CriterionEducationLevel_Id");
+
+                    b.HasOne("JobEntry.Entity.Entities.EducationLevel", null)
+                        .WithMany()
+                        .HasForeignKey("EducationLevel_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_EducationLevel_Id");
+                });
+
+            modelBuilder.Entity("CriterionExperienceManyToMany", b =>
+                {
+                    b.HasOne("JobEntry.Entity.Entities.Criterion", null)
+                        .WithMany()
+                        .HasForeignKey("CriterionExperience_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_CriterionExperience_Id");
+
+                    b.HasOne("JobEntry.Entity.Entities.Experience", null)
+                        .WithMany()
+                        .HasForeignKey("Experience_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Experience_Id");
+                });
+
+            modelBuilder.Entity("CriterionMilitaryStatusManyToMany", b =>
+                {
+                    b.HasOne("JobEntry.Entity.Entities.Criterion", null)
+                        .WithMany()
+                        .HasForeignKey("CriterionMilitaryStatus_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_CriterionMilitaryStatus_Id");
+
+                    b.HasOne("JobEntry.Entity.Entities.MilitaryStatus", null)
+                        .WithMany()
+                        .HasForeignKey("MilitaryStatus_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_MilitaryStatus_Id");
                 });
 
             modelBuilder.Entity("JobApplicants", b =>
@@ -949,33 +1011,6 @@ namespace JobEntity.DataAccess.Migrations
                     b.Navigation("Image");
                 });
 
-            modelBuilder.Entity("JobEntry.Entity.Entities.Criterion", b =>
-                {
-                    b.HasOne("JobEntry.Entity.Entities.DrivingLicense", "DrivingLicense")
-                        .WithMany()
-                        .HasForeignKey("DrivingLicenseId");
-
-                    b.HasOne("JobEntry.Entity.Entities.EducationLevel", "EducationLevel")
-                        .WithMany()
-                        .HasForeignKey("EducationLevelId");
-
-                    b.HasOne("JobEntry.Entity.Entities.Experience", "Experience")
-                        .WithMany()
-                        .HasForeignKey("ExperienceId");
-
-                    b.HasOne("JobEntry.Entity.Entities.MilitaryStatus", "MilitaryStatus")
-                        .WithMany()
-                        .HasForeignKey("MilitaryStatusId");
-
-                    b.Navigation("DrivingLicense");
-
-                    b.Navigation("EducationLevel");
-
-                    b.Navigation("Experience");
-
-                    b.Navigation("MilitaryStatus");
-                });
-
             modelBuilder.Entity("JobEntry.Entity.Entities.Job", b =>
                 {
                     b.HasOne("JobEntry.Entity.Entities.Company", "Company")
@@ -1038,8 +1073,8 @@ namespace JobEntity.DataAccess.Migrations
             modelBuilder.Entity("JobEntry.Entity.Entities.Qualification", b =>
                 {
                     b.HasOne("JobEntry.Entity.Entities.Job", "Job")
-                        .WithOne("Qualification")
-                        .HasForeignKey("JobEntry.Entity.Entities.Qualification", "JobId")
+                        .WithMany("Qualifications")
+                        .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1049,7 +1084,7 @@ namespace JobEntity.DataAccess.Migrations
             modelBuilder.Entity("JobEntry.Entity.Entities.QualificationDetail", b =>
                 {
                     b.HasOne("JobEntry.Entity.Entities.Qualification", "Qualification")
-                        .WithMany("QualificationDetails")
+                        .WithMany()
                         .HasForeignKey("QualificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1060,8 +1095,8 @@ namespace JobEntity.DataAccess.Migrations
             modelBuilder.Entity("JobEntry.Entity.Entities.Responsibility", b =>
                 {
                     b.HasOne("JobEntry.Entity.Entities.Job", "Job")
-                        .WithOne("Responsibility")
-                        .HasForeignKey("JobEntry.Entity.Entities.Responsibility", "JobId")
+                        .WithMany("Responsibilities")
+                        .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1071,7 +1106,7 @@ namespace JobEntity.DataAccess.Migrations
             modelBuilder.Entity("JobEntry.Entity.Entities.ResponsibilityDetail", b =>
                 {
                     b.HasOne("JobEntry.Entity.Entities.Responsibility", "Responsibility")
-                        .WithMany("ResponsibilityDetails")
+                        .WithMany()
                         .HasForeignKey("ResponsibilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1095,19 +1130,9 @@ namespace JobEntity.DataAccess.Migrations
 
             modelBuilder.Entity("JobEntry.Entity.Entities.Job", b =>
                 {
-                    b.Navigation("Qualification");
+                    b.Navigation("Qualifications");
 
-                    b.Navigation("Responsibility");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.Qualification", b =>
-                {
-                    b.Navigation("QualificationDetails");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.Responsibility", b =>
-                {
-                    b.Navigation("ResponsibilityDetails");
+                    b.Navigation("Responsibilities");
                 });
 #pragma warning restore 612, 618
         }

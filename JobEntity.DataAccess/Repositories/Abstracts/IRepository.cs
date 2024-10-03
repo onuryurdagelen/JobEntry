@@ -19,6 +19,7 @@ namespace JobEntity.DataAccess.Repositories.Abstracts
 		Task<TEntity> GetByGuidAsync(Guid id);
 
 		Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
+		IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties);
 
 		Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null);
 

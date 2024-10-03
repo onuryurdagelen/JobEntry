@@ -86,5 +86,18 @@ namespace JobEntity.DataAccess.Repositories.Concretes
 		{
 			Table.Update(entity);
 		}
-	}
+
+        public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            IQueryable<TEntity> query = Table;
+            if (predicate is not null) query = query.Where(predicate);
+
+            if (includeProperties.Any())
+                foreach (var item in includeProperties)
+                {
+                    query = query.Include(item);
+                }
+			return query;
+        }
+    }
 }

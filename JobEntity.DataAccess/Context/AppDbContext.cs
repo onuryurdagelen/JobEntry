@@ -22,13 +22,11 @@ namespace JobEntity.DataAccess.Context
         public DbSet<Applicant> Applicants { get; set; }
         public DbSet<Employer> Employers { get; set; }
 
-        public DbSet<QualificationDetail> QualificationDetails { get; set; }
         public DbSet<Responsibility> Responsibilities { get; set; }
-        public DbSet<ResponsibilityDetail> ResponsibilityDetails { get; set; }
         public DbSet<WorkType> WorkTypes { get; set; }
         public DbSet<WorkPreference> WorkPreferences { get; set; }
         public DbSet<DrivingLicense> DrivingLicences { get; set; }
-        public DbSet<MilitaryStatus> MilitaryStatus { get; set; }
+        public DbSet<MilitaryStatus> MilitaryStatuses { get; set; }
         public DbSet<Experience> Experiences { get; set; }
         public DbSet<Criterion> Criterions { get; set; }
         public DbSet<JobLanguage> JobLanguages { get; set; }
@@ -57,8 +55,10 @@ namespace JobEntity.DataAccess.Context
 
 			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        }
-		
+           
 
-	}
+        }
+
+
+    }
 }
