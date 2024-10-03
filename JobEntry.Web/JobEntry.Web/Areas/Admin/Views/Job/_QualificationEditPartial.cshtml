@@ -1,20 +1,21 @@
-﻿@model ResponsibilityDto
+﻿@model QualificationDto
 
 <!-- Edit Qualification Modal -->
-<div class="modal fade" id="addResponsibilityModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="editQualificationModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addQualificationModalTitle">Add Responsibility</h5>
+                <h5 class="modal-title" id="addQualificationModalTitle">Edit Qualification</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="add-responsibility-container">
+            <div class="modal-body" id="edit-qualification-container">
                 <div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display:none;"></div>
-                <form method="post" id="addResponsibilityForm" asp-action="AddResponsibilityWithAjax" enctype="multipart/form-data">
+                <form method="post" id="editQualificationForm" asp-action="EditQualificationWithAjax" enctype="multipart/form-data">
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <input asp-for="JobId" type="hidden" />
+                    <input asp-for="Id" type="hidden" />
                     <div class="form-group mb-3">
                         <label for="defaultFormControlInput" class="form-label">Description</label>
                         <textarea rows="4" cols="3" class="form-control" asp-for="Description"></textarea>

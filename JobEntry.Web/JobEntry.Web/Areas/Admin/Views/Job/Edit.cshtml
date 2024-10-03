@@ -79,7 +79,7 @@
                                             <p>@(qualification.Description.Length >= 150 ? qualification.Description.Substring(0, 150).Insert(150, "...") : qualification.Description)</p>
                                         </div>
                                         <div class="col-md-2 d-flex justify-content-end">
-                                            <button type="button" class="btn btn-primary btn-sm text-white edit-qualification" data-id="@qualification.Id" data-jobid="@Model.Id">
+                                            <button type="button" class="btn btn-primary btn-sm text-white edit-qualification" data-qid="@qualification.Id" data-jobid="@Model.Id">
                                                 <i class="bx bxs-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm text-white delete-qualification" data-qid="@qualification.Id" data-jobid="@Model.Id">
@@ -110,7 +110,7 @@
                                             <p>@(responsibility.Description.Length >= 150 ? responsibility.Description.Substring(0, 150).Insert(150, "...") : responsibility.Description)</p>
                                         </div>
                                         <div class="col-md-2 d-flex justify-content-end">
-                                            <button type="button" class="btn btn-primary btn-sm text-white edit-responsibility" data-id="@responsibility.Id" data-jobid="@Model.Id">
+                                            <button type="button" class="btn btn-primary btn-sm text-white edit-responsibility" data-rid="@responsibility.Id" data-jobid="@Model.Id">
                                                 <i class="bx bxs-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm text-white delete-responsibility" data-rid="@responsibility.Id" data-jobid="@Model.Id">
@@ -184,13 +184,19 @@
     </div>
 </div>
 
-<!-- Edit Qualification Modal -->
+<!-- Add Qualification Modal -->
 <div id="addQualificationModal-container" aria-hidden="true">
     
 </div>
-<!-- Edit Responsibility Modal -->
+<!-- Add Responsibility Modal -->
 <div id="addResponsibilityModal-container" aria-hidden="true">
    
+</div>
+
+<div id="editQualificationModal-container" aria-hidden="true">
+</div>
+<!-- Add Responsibility Modal -->
+<div id="editResponsibilityModal-container" aria-hidden="true">
 </div>
 
 
@@ -201,8 +207,8 @@
         app.Urls.baseUrl = '@Url.Content("~")';
         app.Urls.AddQualificationModalUrl = '@Url.Action(action: "AddQualificationPartial", controller: "Job")';
         app.Urls.AddResponsibilityModalUrl = '@Url.Action(action: "AddResponsibilityPartial", controller: "Job")';
-        app.Urls.UpdateQualificationModalUrl = '@Url.Action(action: "UpdateQualificationPartial", controller: "Job")';
-        app.Urls.UpdateResponsibilityModalUrl = '@Url.Action(action: "UpdateResponsibilityPartial", controller: "Job")';
+        app.Urls.EditQualificationModalUrl = '@Url.Action(action: "EditQualificationPartial", controller: "Job")';
+        app.Urls.EditResponsibilityModalUrl = '@Url.Action(action: "EditResponsibilityPartial", controller: "Job")';
         app.JobId = '@Model.Id';
     </script>
     <script src="~/js/utils.js" type="application/ecmascript"></script>

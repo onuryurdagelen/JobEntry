@@ -1,6 +1,34 @@
-﻿$(document).on('click', '.edit-qualification', function () {
-    alert('edit qualification clicked!');
+﻿//Edit Qualification
+const editQualificationModalContainer = $("#editQualificationModal-container");
+$(document).on('click', '.edit-qualification', function () {
+    let editQualificationModalUrl = app.Urls.EditQualificationModalUrl;
+    let qid = $(this).attr("data-qid");
+    let jobid = $(this).attr("data-jobid")
+    $.get(editQualificationModalUrl, { jobId: jobid,qId:qid }).done(function (data) {
+        editQualificationModalContainer.html(data);
+        editQualificationModalContainer.find('.modal').modal('show');
+    })
 })
+
+
+//Edit Responsibility
+const editResponsibilityModalContainer = $("#editResponsibilityModal-container");
+$(document).on('click', '.edit-responsibility', function () {
+    let editResponsibilityModalUrl = app.Urls.EditResponsibilityModalUrl;
+    let rid = $(this).attr("data-rid");
+    let jobid = $(this).attr("data-jobid")
+    $.get(editResponsibilityModalUrl, { jobId: jobid,rId:rid }).done(function (data) {
+        editResponsibilityModalContainer.html(data);
+        editResponsibilityModalContainer.find('.modal').modal('show');
+    })
+
+})
+
+
+
+
+
+//Delete Qualification
 $(document).on('click', '.delete-qualification', function () {
     let qid = $(this).attr("data-qid");
     let jobid = $(this).attr("data-jobid")
@@ -38,6 +66,7 @@ $(document).on('click', '.delete-qualification', function () {
     });
 })
 
+//Delete Responsibility
 $(document).on('click', '.delete-responsibility', function () {
     let rid = $(this).attr("data-rid");
     let jobid = $(this).attr("data-jobid")
@@ -110,7 +139,7 @@ $(document).ready(function () {
                                             <p>${newQualification.Description.length >= 150 ? CutStr(newQualification.Description,0,150).concat("..") : newQualification.Description}</p>
                                         </div>
                                         <div class="col-md-2 d-flex justify-content-end">
-                                            <button type="button" class="btn btn-primary btn-sm text-white edit-qualification" data-id="${newQualification.Id}" data-jobid="${newQualification.JobId}">
+                                            <button type="button" class="btn btn-primary btn-sm text-white edit-qualification" data-qid="${newQualification.Id}" data-jobid="${newQualification.JobId}">
                                                 <i class="bx bxs-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm text-white delete-qualification" data-qid="${newQualification.Id}" data-jobid="${newQualification.JobId}">
@@ -149,7 +178,6 @@ $(document).ready(function () {
 
             $.post(actionUrl, dataToSend).done(function (data) {
                 const newFormBody = $('.modal-body', data.view);
-                console.log(newFormBody);
                 addResponsibilityModalContainer.find('.modal-body').replaceWith(newFormBody);
                 const isValid = newFormBody.find('[name="IsValid"]').val() == 'True';
                 if (isValid) {
@@ -159,7 +187,7 @@ $(document).ready(function () {
                                             <p>${newResponsibility.Description.length >= 150 ? CutStr(newResponsibility.Description, 0, 150).concat("..") : newResponsibility.Description}</p>
                                         </div>
                                         <div class="col-md-2 d-flex justify-content-end">
-                                            <button type="button" class="btn btn-primary btn-sm text-white edit-responsibility" data-id="${newResponsibility.Id}" data-jobid="${newResponsibility.JobId}">
+                                            <button type="button" class="btn btn-primary btn-sm text-white edit-responsibility" data-rid="${newResponsibility.Id}" data-jobid="${newResponsibility.JobId}">
                                                 <i class="bx bxs-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm text-white delete-responsibility" data-rid="${newResponsibility.Id}" data-jobid="${newResponsibility.JobId}">
@@ -175,18 +203,58 @@ $(document).ready(function () {
 
 
         })
-   
 
-  
+        //Edit Qualification when form Button submitted
+
+    editQualificationModalContainer.on('click',
+        '#btnSave',
+        function (event) {
+            event.preventDefault();
+            const form = $("#editQualificationForm");
+            const actionUrl = form.attr('action');
+            const dataToSend = form.serialize();
+            const jobId = app.JobId;
+
+            $.post(actionUrl, dataToSend).done(function (data) {
+                const newFormBody = $('.modal-body', data.view);
+                editQualificationModalContainer.find('.modal-body').replaceWith(newFormBody);
+                const isValid = newFormBody.find('[name="IsValid"]').val() == 'True';
+                if (isValid) {
+                    let qualification = $("#qualification-list").find(`li[data-id="${data.qualification.Id}"]`);
+                    $(qualification).find("p").text(data.qualification.Description);
+                    editQualificationModalContainer.find('.modal').modal('hide');
+                }
+            });
 
 
-   
-    
+        })
 
-    //Edit Qualification
+    //Edit Responsibility when form Button submitted
 
-    //Edit Responsibility
+    editResponsibilityModalContainer.on('click',
+        '#btnSave',
+        function (event) {
+            event.preventDefault();
+            const form = $("#editResponsibilityForm");
+            const actionUrl = form.attr('action');
+            const dataToSend = form.serialize();
+            const jobId = app.JobId;
 
+            $.post(actionUrl, dataToSend).done(function (data) {
+                const newFormBody = $('.modal-body', data.view);
+                editResponsibilityModalContainer.find('.modal-body').replaceWith(newFormBody);
+                const isValid = newFormBody.find('[name="IsValid"]').val() == 'True';
+                if (isValid) {
+                    let responsibility = $("#responsibility-list").find(`li[data-id="${data.responsibility.Id}"]`);
+                    $(responsibility).find("p").text(data.responsibility.Description);
+                    editResponsibilityModalContainer.find('.modal').modal('hide');
+                }
+            });
+
+
+        })
+
+ 
 
 
 

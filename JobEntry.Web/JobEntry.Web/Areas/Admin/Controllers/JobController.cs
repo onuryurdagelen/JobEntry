@@ -29,7 +29,14 @@ namespace JobEntry.Web.Areas.Admin.Controllers
         private readonly IValidator<Responsibility> _validatorR;
         private readonly ICriterionService _criterionService;
         private readonly IToastNotification _toastNotification;
-        public JobController(IJobService jobService, ICompanyService companyService, IMapper mapper, IValidator<Job> validator, IValidator<Qualification> validatorQ, IToastNotification toastNotification, ICriterionService criterionService, IValidator<Responsibility> validatorR)
+        public JobController(IJobService jobService,
+            ICompanyService companyService, 
+            IMapper mapper, 
+            IValidator<Job> validator, 
+            IValidator<Qualification> validatorQ, 
+            IToastNotification toastNotification, 
+            ICriterionService criterionService, 
+            IValidator<Responsibility> validatorR)
         {
             _jobService = jobService;
             _companyService = companyService;
@@ -189,16 +196,16 @@ namespace JobEntry.Web.Areas.Admin.Controllers
             return PartialView("_ResponsibilityAddPartial", new ResponsibilityDto { JobId = Guid.Parse(jobId) });
         }
         [HttpGet]
-        public async Task<IActionResult> UpdateQualificationPartial(string qId,string jobId)
+        public async Task<IActionResult> EditQualificationPartial(string qId,string jobId)
         {
             var response = await _criterionService.GetQualificationAsync(qId,jobId);
-            return PartialView("_QualificationUpdatePartial", new QualificationDto { Id = response.Data.Id,JobId = response.Data.JobId,Description = response.Data.Description  });
+            return PartialView("_QualificationEditPartial", new QualificationDto { Id = response.Data.Id,JobId = response.Data.JobId,Description = response.Data.Description  });
         }
         [HttpGet]
-        public async Task<IActionResult> UpdateResponsibilityPartial(string rId,string jobId)
+        public async Task<IActionResult> EditResponsibilityPartial(string rId,string jobId)
         {
             var response = await _criterionService.GetResponsibilityAsync(rId,jobId);
-            return PartialView("_ResponsibilityUpdatePartial", new ResponsibilityDto { Id = response.Data.Id, JobId = response.Data.JobId, Description = response.Data.Description });
+            return PartialView("_ResponsibilityEditPartial", new ResponsibilityDto { Id = response.Data.Id, JobId = response.Data.JobId, Description = response.Data.Description });
         }
         [HttpPost]
         public async Task<IActionResult> AddQualificationWithAjax(QualificationDto model)
@@ -235,17 +242,36 @@ namespace JobEntry.Web.Areas.Admin.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> AddResponsibility(ResponsibilityDto model)
+        public async Task<IActionResult> EditQualificationWithAjax(QualificationDto model)
         {
-            if (!ModelState.IsValid)
+            var result = await _validatorQ.ValidateAsync(_mapper.Map<Qualification>(model));
+            if (!result.IsValid)
             {
-                // Re-render the partial or full view with the ModelState errors
-                var renderedView = this.RenderViewToStringAsync("_ResponsibilityAddPartial", model);
-                return Json(new { success = false, view = renderedView });
+                result.AddToModelState(this.ModelState);
+                var viewWithErrorModel = await this.RenderViewToStringAsync("_QualificationEditPartial", model);
+                return new CustomResult(new { view = viewWithErrorModel, success = false });
             }
+            var respponse = await _criterionService.UpdateQualification(model);
+            var view = await this.RenderViewToStringAsync("_QualificationEditPartial", model);
+            return new CustomResult(new { qualification = respponse.Data, view = view, success = true });
 
-            // If valid, proceed with the success logic
-            return Json(new { success = true, message = "Form submitted successfully!" });
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditResponsibilityWithAjax(ResponsibilityDto model)
+        {
+            var result = await _validatorR.ValidateAsync(_mapper.Map<Responsibility>(model));
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+                var viewWithErrorModel = await this.RenderViewToStringAsync("_ResponsibilityEditPartial", model);
+                return new CustomResult(new { view = viewWithErrorModel, success = false });
+            }
+            var respponse = await _criterionService.UpdateResponsibility(model);
+            var view = await this.RenderViewToStringAsync("_ResponsibilityEditPartial", model);
+            return new CustomResult(new { responsibility = respponse.Data, view = view, success = true });
+
+
         }
 
     }

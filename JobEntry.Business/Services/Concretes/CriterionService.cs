@@ -42,12 +42,18 @@ namespace JobEntry.Business.Services.Concretes
         }
         public async Task<ServiceResponse<QualificationDto>> UpdateQualification(QualificationDto model)
         {
-            throw new NotImplementedException();
+            var qualification = _mapper.Map<Qualification>(model);
+            _unitOfWork.GetRepository<Qualification>().Update(qualification);
+            await _unitOfWork.SaveChangesAsync();
+            return new ServiceResponse<QualificationDto>(true, model);
         }
 
         public async Task<ServiceResponse<ResponsibilityDto>> UpdateResponsibility(ResponsibilityDto model)
         {
-            throw new NotImplementedException();
+            var responsibility = _mapper.Map<Responsibility>(model);
+            _unitOfWork.GetRepository<Responsibility>().Update(responsibility);
+            await _unitOfWork.SaveChangesAsync();
+            return new ServiceResponse<ResponsibilityDto>(true, model);
         }
 
         public async Task<ServiceResponse<List<QualificationDto>>> DeleteQualification(string qId, string jobId)
