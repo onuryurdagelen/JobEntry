@@ -25,6 +25,9 @@ namespace JobEntry.Entity.DTOs.Job
         public Guid[] SelectedMilitaryStatusIds { get; set; }
         public Guid CompanyId { get; set; }
         public Guid WorkTypeId { get; set; }
+        public Guid WorkPreferenceId { get; set; }
+        public Guid? CriterionId { get; set; }
+        public Criterion Criterion { get; set; }
 
         public CriterionListDto Criterions { get; set; } = new CriterionListDto();
         public QualificationDto? Qualification { get; set; }
@@ -33,5 +36,6 @@ namespace JobEntry.Entity.DTOs.Job
         public List<ResponsibilityDto> Responsibilities { get; set; } //sorumluluklar
         public IList<CompanyDto>? Companies { get; set; }
         public IList<WorkType>? WorkTypes { get; set; }
+        public IList<WorkPreference>? WorkPreferences { get; set; }
     }
 }

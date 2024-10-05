@@ -90,14 +90,18 @@ namespace JobEntry.Business.Services.Concretes
 
             if(model.Photo is not null) 
             {
-                if(company.Image is not null) _imageHelper.Delete(company.Image.FileName);
-
+                if(company.Image is not null)
+                {
+                    _imageHelper.Delete(company.Image.FileName);
+                    company.Image.ModifiedDate = DateTime.Now;
+                    company.Image.ModifiedBy = _user.GetLoggedInEmailAddress();
+                }
 
                 ImageUploadDto imageUploadDto = await _imageHelper.Upload(model.Name, model.Photo, Entity.Enums.ImageType.Company);
-                company.Image.ModifiedDate = DateTime.Now;
-                company.Image.ModifiedBy = _user.GetLoggedInEmailAddress();
+                if (company.Image is null) company.Image = new Image();
                 company.Image.FileName = imageUploadDto.FileName;
                 company.Image.FileType = model.Photo.ContentType;
+                company.Image.CreatedBy = _user.GetLoggedInEmailAddress();
             }
             company.Name = model.Name;
             company.Description = model.Description;

@@ -4,6 +4,7 @@ using JobEntity.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobEntity.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241004221346_ManyToManyRelsEdited")]
+    partial class ManyToManyRelsEdited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,66 @@ namespace JobEntity.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("CriterionDrivingLicense", b =>
+                {
+                    b.Property<Guid>("CriterionsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DrivingLicensesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CriterionsId", "DrivingLicensesId");
+
+                    b.HasIndex("DrivingLicensesId");
+
+                    b.ToTable("CriterionDrivingLicenses", (string)null);
+                });
+
+            modelBuilder.Entity("CriterionEducationLevel", b =>
+                {
+                    b.Property<Guid>("CriterionsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EducationLevelsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CriterionsId", "EducationLevelsId");
+
+                    b.HasIndex("EducationLevelsId");
+
+                    b.ToTable("CriterionEducationLevels", (string)null);
+                });
+
+            modelBuilder.Entity("CriterionExperience", b =>
+                {
+                    b.Property<Guid>("CriterionsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ExperiencesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CriterionsId", "ExperiencesId");
+
+                    b.HasIndex("ExperiencesId");
+
+                    b.ToTable("CriterionExperiences", (string)null);
+                });
+
+            modelBuilder.Entity("CriterionMilitaryStatus", b =>
+                {
+                    b.Property<Guid>("CriterionsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MilitaryStatusesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CriterionsId", "MilitaryStatusesId");
+
+                    b.HasIndex("MilitaryStatusesId");
+
+                    b.ToTable("CriterionMilitaryStatuses", (string)null);
+                });
 
             modelBuilder.Entity("JobApplicants", b =>
                 {
@@ -316,66 +378,6 @@ namespace JobEntity.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Criterions");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.CriterionDrivingLicense", b =>
-                {
-                    b.Property<Guid>("CriterionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DrivingLicenseId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CriterionId", "DrivingLicenseId");
-
-                    b.HasIndex("DrivingLicenseId");
-
-                    b.ToTable("CriterionDrivingLicenses");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.CriterionEducationLevel", b =>
-                {
-                    b.Property<Guid>("CriterionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EducationLevelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CriterionId", "EducationLevelId");
-
-                    b.HasIndex("EducationLevelId");
-
-                    b.ToTable("CriterionEducationLevels");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.CriterionExperience", b =>
-                {
-                    b.Property<Guid>("CriterionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ExperienceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CriterionId", "ExperienceId");
-
-                    b.HasIndex("ExperienceId");
-
-                    b.ToTable("CriterionExperiences");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.CriterionMilitaryStatus", b =>
-                {
-                    b.Property<Guid>("CriterionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MilitaryStatusId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CriterionId", "MilitaryStatusId");
-
-                    b.HasIndex("MilitaryStatusId");
-
-                    b.ToTable("CriterionMilitaryStatuses");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.Department", b =>
@@ -773,6 +775,66 @@ namespace JobEntity.DataAccess.Migrations
                     b.HasDiscriminator().HasValue("Employer");
                 });
 
+            modelBuilder.Entity("CriterionDrivingLicense", b =>
+                {
+                    b.HasOne("JobEntry.Entity.Entities.Criterion", null)
+                        .WithMany()
+                        .HasForeignKey("CriterionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobEntry.Entity.Entities.DrivingLicense", null)
+                        .WithMany()
+                        .HasForeignKey("DrivingLicensesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CriterionEducationLevel", b =>
+                {
+                    b.HasOne("JobEntry.Entity.Entities.Criterion", null)
+                        .WithMany()
+                        .HasForeignKey("CriterionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobEntry.Entity.Entities.EducationLevel", null)
+                        .WithMany()
+                        .HasForeignKey("EducationLevelsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CriterionExperience", b =>
+                {
+                    b.HasOne("JobEntry.Entity.Entities.Criterion", null)
+                        .WithMany()
+                        .HasForeignKey("CriterionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobEntry.Entity.Entities.Experience", null)
+                        .WithMany()
+                        .HasForeignKey("ExperiencesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CriterionMilitaryStatus", b =>
+                {
+                    b.HasOne("JobEntry.Entity.Entities.Criterion", null)
+                        .WithMany()
+                        .HasForeignKey("CriterionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobEntry.Entity.Entities.MilitaryStatus", null)
+                        .WithMany()
+                        .HasForeignKey("MilitaryStatusesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("JobApplicants", b =>
                 {
                     b.HasOne("JobEntry.Entity.Entities.Applicant", null)
@@ -857,82 +919,6 @@ namespace JobEntity.DataAccess.Migrations
                         .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.CriterionDrivingLicense", b =>
-                {
-                    b.HasOne("JobEntry.Entity.Entities.Criterion", "Criterion")
-                        .WithMany("CriterionDrivingLicenses")
-                        .HasForeignKey("CriterionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobEntry.Entity.Entities.DrivingLicense", "DrivingLicense")
-                        .WithMany("CriterionDrivingLicenses")
-                        .HasForeignKey("DrivingLicenseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Criterion");
-
-                    b.Navigation("DrivingLicense");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.CriterionEducationLevel", b =>
-                {
-                    b.HasOne("JobEntry.Entity.Entities.Criterion", "Criterion")
-                        .WithMany("CriterionEducationLevels")
-                        .HasForeignKey("CriterionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobEntry.Entity.Entities.EducationLevel", "EducationLevel")
-                        .WithMany("CriterionEducationLevels")
-                        .HasForeignKey("EducationLevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Criterion");
-
-                    b.Navigation("EducationLevel");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.CriterionExperience", b =>
-                {
-                    b.HasOne("JobEntry.Entity.Entities.Criterion", "Criterion")
-                        .WithMany("CriterionExperiences")
-                        .HasForeignKey("CriterionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobEntry.Entity.Entities.Experience", "Experience")
-                        .WithMany("CriterionExperiences")
-                        .HasForeignKey("ExperienceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Criterion");
-
-                    b.Navigation("Experience");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.CriterionMilitaryStatus", b =>
-                {
-                    b.HasOne("JobEntry.Entity.Entities.Criterion", "Criterion")
-                        .WithMany("CriterionMilitaryStatuses")
-                        .HasForeignKey("CriterionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JobEntry.Entity.Entities.MilitaryStatus", "MilitaryStatus")
-                        .WithMany("CriterionMilitaryStatuses")
-                        .HasForeignKey("MilitaryStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Criterion");
-
-                    b.Navigation("MilitaryStatus");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.Job", b =>
@@ -1030,42 +1016,11 @@ namespace JobEntity.DataAccess.Migrations
                     b.Navigation("Employer");
                 });
 
-            modelBuilder.Entity("JobEntry.Entity.Entities.Criterion", b =>
-                {
-                    b.Navigation("CriterionDrivingLicenses");
-
-                    b.Navigation("CriterionEducationLevels");
-
-                    b.Navigation("CriterionExperiences");
-
-                    b.Navigation("CriterionMilitaryStatuses");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.DrivingLicense", b =>
-                {
-                    b.Navigation("CriterionDrivingLicenses");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.EducationLevel", b =>
-                {
-                    b.Navigation("CriterionEducationLevels");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.Experience", b =>
-                {
-                    b.Navigation("CriterionExperiences");
-                });
-
             modelBuilder.Entity("JobEntry.Entity.Entities.Job", b =>
                 {
                     b.Navigation("Qualifications");
 
                     b.Navigation("Responsibilities");
-                });
-
-            modelBuilder.Entity("JobEntry.Entity.Entities.MilitaryStatus", b =>
-                {
-                    b.Navigation("CriterionMilitaryStatuses");
                 });
 #pragma warning restore 612, 618
         }

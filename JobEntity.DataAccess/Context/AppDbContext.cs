@@ -29,6 +29,10 @@ namespace JobEntity.DataAccess.Context
         public DbSet<MilitaryStatus> MilitaryStatuses { get; set; }
         public DbSet<Experience> Experiences { get; set; }
         public DbSet<Criterion> Criterions { get; set; }
+        public DbSet<CriterionDrivingLicense> CriterionDrivingLicenses { get; set; }
+        public DbSet<CriterionEducationLevel> CriterionEducationLevels { get; set; }
+        public DbSet<CriterionExperience> CriterionExperiences { get; set; }
+        public DbSet<CriterionMilitaryStatus> CriterionMilitaryStatuses { get; set; }
         public DbSet<JobLanguage> JobLanguages { get; set; }
         public DbSet<Position> Positions { get; set; }
         public DbSet<EducationLevel> EducationLevels { get; set; }

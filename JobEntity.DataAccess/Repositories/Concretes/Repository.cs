@@ -26,7 +26,12 @@ namespace JobEntity.DataAccess.Repositories.Concretes
 			await Table.AddAsync(entity);
 		}
 
-		public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task AddRangeAsync(TEntity[] entity)
+        {
+           await Table.AddRangeAsync(entity);
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
 		{
 			return await Table.Where(predicate).AnyAsync();
 			

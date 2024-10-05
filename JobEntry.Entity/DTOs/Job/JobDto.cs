@@ -33,10 +33,11 @@ namespace JobEntry.Entity.DTOs.Job
         public List<ResponsibilityDto> Responsibilities { get; set; } //sorumluluklar
 
         public Guid? CriterionId { get; set; }
-        public JobEntry.Entity.Entities.Criterion Criterion { get; set; } //aday kriterleri
+        public JobEntry.Entity.Entities.Criterion Criterion { get; set; } //aday kriterleri//aday kriterleri
 
         public Guid CompanyId { get; set; }
         public Guid WorkTypeId { get; set; }
+        public Guid WorkPreferenceId { get; set; }
 
         public JobEntry.Entity.Entities.Company Company { get; set; }
 

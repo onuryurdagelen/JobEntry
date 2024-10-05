@@ -451,10 +451,70 @@ namespace JobEntity.DataAccess.Seed
             }
             #endregion
             #region Criterions
-            //if (!await _context.Criterions.AnyAsync())
-            //{
-               
-            //}
+            if (!await _context.Criterions.AnyAsync())
+            {
+                await _context.Criterions.AddRangeAsync(new []
+                {
+                    new Criterion{ 
+                        Id = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
+                        CriterionDrivingLicenses = new[] 
+                        { 
+                            new CriterionDrivingLicense
+                            { 
+                             CriterionId = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
+                             DrivingLicenseId = Guid.Parse("6E36FC03-6FB3-471E-A0A4-710EC80208F5"),
+                            },
+                            new CriterionDrivingLicense
+                            {
+                             CriterionId = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
+                             DrivingLicenseId = Guid.Parse("86B41B3C-59D6-4C77-817A-963F846F1E08"),
+                            }
+                        },
+                        CriterionEducationLevels = new[]
+                        {
+                            new CriterionEducationLevel
+                            {
+                             CriterionId = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
+                             EducationLevelId = Guid.Parse("03E18F72-C6AC-47C4-96C2-8C88C3AE1CCE"),
+                            },
+                            new CriterionEducationLevel
+                            {
+                             CriterionId = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
+                             EducationLevelId = Guid.Parse("1535C788-AD4D-4134-97B9-7C823F3771D4"),
+                            }
+                        },
+                        CriterionExperiences = new[] 
+                        { 
+                        
+                            new CriterionExperience
+                            {
+                                CriterionId = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
+                                ExperienceId = Guid.Parse("F9FB5940-05D9-4733-9159-9FBD2FB9A479"),
+                            },
+                            new CriterionExperience
+                            {
+                                CriterionId = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
+                                ExperienceId = Guid.Parse("3D29BDEB-C5E6-418F-AF0E-62D3B36EFB34"),
+                            }
+                        },
+                        CriterionMilitaryStatuses = new [] 
+                        {
+                        
+                            new CriterionMilitaryStatus
+                            {
+                                CriterionId = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
+                                MilitaryStatusId = Guid.Parse("EC555755-2F0F-4B4B-8CB2-2563FD6ADA8C"),
+                            },
+                            new CriterionMilitaryStatus
+                            {
+                                CriterionId = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
+                                MilitaryStatusId = Guid.Parse("81C3313F-979B-4675-B29B-FFAF683D0F0A"),
+                            }
+                        }
+                    
+                    }
+                });
+            }
             #endregion
             #region LocationTypes
             if (!await _context.LocationTypes.AnyAsync())
@@ -757,10 +817,7 @@ namespace JobEntity.DataAccess.Seed
 					"Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam " +
 					"clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
 					CompanyId = Guid.Parse("5461BBC7-6540-4FFD-BD1B-428ADD2CD4AB"),
-                    Responsibilities = new List<Responsibility>
-                    {
-
-                    }
+                    CriterionId = Guid.Parse("5E73EC4F-7A7E-482F-A029-EFE9BED084C4"),
 
                 },
 				new Job
@@ -843,14 +900,14 @@ namespace JobEntity.DataAccess.Seed
 				new Qualification
 					{
 						Id = Guid.Parse("E6F7F96C-FA6C-4B39-BEC1-61BE57A08654"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. " +
 						"Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
 					},
 				new Qualification
 					{
 						Id = Guid.Parse("90B464BE-2DC7-4A54-B2B2-2DD9F57E3F3A"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. " +
 						"Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
 
@@ -858,21 +915,21 @@ namespace JobEntity.DataAccess.Seed
 				new Qualification
 					{
 						Id = Guid.Parse("5DC82CBA-1F3F-41A0-9FC3-D10F023C2047"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. " +
 						"Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
 					},
 				new Qualification
 					{
 						Id = Guid.Parse("0CD0083D-6D12-4CBA-9748-AD6E8A7DBFF1"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. " +
 						"Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
 					},
 				new Qualification
 					{
 						Id = Guid.Parse("F31FD6EF-355E-4890-A6C1-FF313C5B55EF"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. " +
 						"Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
 					},
@@ -887,35 +944,35 @@ namespace JobEntity.DataAccess.Seed
 				new Responsibility
 					{
 						Id = Guid.Parse("E17E24FF-4F2A-4792-8885-9BC219F111B2"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua " +
 						"sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
 					},
 				new Responsibility
 					{
 						Id = Guid.Parse("8D2F9313-357F-41B1-90CE-BC5A88F9EAC7"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua " +
 						"sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor"
 					},
 				new Responsibility
 					{
 						Id = Guid.Parse("D26C4223-D012-4EBE-8390-3CEF3613C34F"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua " +
 						"sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor"
 					},
 				new Responsibility
 					{
 						Id = Guid.Parse("0EF84CE3-1294-4E60-81DB-7BD05DC8F226"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua " +
 						"sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor"
 					},
 				new Responsibility
 					{
 						Id = Guid.Parse("95742D20-0044-474A-B39D-6FAC3381ED4B"),
-						JobId = Guid.Parse("9C2069FC-0535-4D04-B1BA-08ECEC4F125F"),
+						JobId = Guid.Parse("D0639FB3-5E1E-49E1-AADA-D9FC525A34EA"),
                         Description = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua " +
 						"sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor"
 					},

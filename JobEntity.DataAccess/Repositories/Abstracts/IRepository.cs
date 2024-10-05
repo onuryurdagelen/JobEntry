@@ -11,8 +11,9 @@ namespace JobEntity.DataAccess.Repositories.Abstracts
 	public interface IRepository<TEntity> where TEntity : class,IBaseEntity,new()
 	{
 		Task AddAsync(TEntity entity);
+		Task AddRangeAsync(TEntity[] entity);
 
-		Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity,bool>> predicate = null,params Expression<Func<TEntity, object>>[] includeProperties);
+        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity,bool>> predicate = null,params Expression<Func<TEntity, object>>[] includeProperties);
 
 		Task<TEntity> GetAsync(bool tracking = true,Expression < Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties);
 

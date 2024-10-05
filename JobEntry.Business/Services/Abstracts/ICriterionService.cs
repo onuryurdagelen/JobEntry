@@ -17,6 +17,7 @@ namespace JobEntry.Business.Services.Abstracts
         Task<ServiceResponse<List<EducationLevel>>> GetAllEducationLevelsAsync();
         Task<ServiceResponse<List<MilitaryStatus>>> GetAllMilitaryStatusesAsync();
         Task<ServiceResponse<List<WorkType>>> GetAllWorkTypesAsync();
+        Task<ServiceResponse<List<WorkPreference>>> GetAllWorkPreferencesAsync();
         Task<ServiceResponse<List<QualificationDto>>> DeleteQualification(string qId, string jobId);
         Task<ServiceResponse<List<ResponsibilityDto>>> DeleteResponsibility(string rId, string jobId);
         Task<ServiceResponse<QualificationDto>> AddQualificationAsync(QualificationDto model);

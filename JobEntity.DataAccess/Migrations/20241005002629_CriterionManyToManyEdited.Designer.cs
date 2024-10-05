@@ -4,6 +4,7 @@ using JobEntity.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobEntity.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241005002629_CriterionManyToManyEdited")]
+    partial class CriterionManyToManyEdited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -330,7 +332,7 @@ namespace JobEntity.DataAccess.Migrations
 
                     b.HasIndex("DrivingLicenseId");
 
-                    b.ToTable("CriterionDrivingLicenses");
+                    b.ToTable("CriterionDrivingLicense");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.CriterionEducationLevel", b =>
@@ -345,7 +347,7 @@ namespace JobEntity.DataAccess.Migrations
 
                     b.HasIndex("EducationLevelId");
 
-                    b.ToTable("CriterionEducationLevels");
+                    b.ToTable("CriterionEducationLevel");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.CriterionExperience", b =>
@@ -360,7 +362,7 @@ namespace JobEntity.DataAccess.Migrations
 
                     b.HasIndex("ExperienceId");
 
-                    b.ToTable("CriterionExperiences");
+                    b.ToTable("CriterionExperience");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.CriterionMilitaryStatus", b =>
@@ -375,7 +377,7 @@ namespace JobEntity.DataAccess.Migrations
 
                     b.HasIndex("MilitaryStatusId");
 
-                    b.ToTable("CriterionMilitaryStatuses");
+                    b.ToTable("CriterionMilitaryStatus");
                 });
 
             modelBuilder.Entity("JobEntry.Entity.Entities.Department", b =>

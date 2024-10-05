@@ -4,6 +4,7 @@ using JobEntry.Business.Extensions;
 using JobEntry.Business.Services.Abstracts;
 using JobEntry.Business.Utilities.Statics;
 using JobEntry.Entity.DTOs.Company;
+using JobEntry.Entity.DTOs.Criterions;
 using JobEntry.Entity.DTOs.Job;
 using JobEntry.Entity.DTOs.Qualification;
 using JobEntry.Entity.DTOs.Responsibility;
@@ -60,11 +61,13 @@ namespace JobEntry.Web.Areas.Admin.Controllers
             var educationLevelsResponse = await _criterionService.GetAllEducationLevelsAsync();
             var militaryStatusesResponse = await _criterionService.GetAllMilitaryStatusesAsync();
             var experiencesResponse = await _criterionService.GetAllExperienceAsync();
-            var workTypes = await _criterionService.GetAllWorkTypesAsync();
+            var workTypesResponse = await _criterionService.GetAllWorkTypesAsync();
+            var workPreferencesResponse = await _criterionService.GetAllWorkPreferencesAsync();
             var model = new CreateJobDto
             {
                 Companies = result.Data,
-                WorkTypes = workTypes.Data,
+                WorkTypes = workTypesResponse.Data,
+                WorkPreferences = workPreferencesResponse.Data,
                 Criterions =
                 {
                     DrivingLicenses = drivingLicensesResponse.Data,
@@ -89,8 +92,10 @@ namespace JobEntry.Web.Areas.Admin.Controllers
                 var educationLevelsResponse = await _criterionService.GetAllEducationLevelsAsync();
                 var militaryStatusesResponse = await _criterionService.GetAllMilitaryStatusesAsync();
                 var experiencesResponse = await _criterionService.GetAllExperienceAsync();
-                var workTypes = await _criterionService.GetAllWorkTypesAsync();
-                model.WorkTypes = workTypes.Data;
+                var workTypesResponse = await _criterionService.GetAllWorkTypesAsync();
+                var workPreferencesResponse = await _criterionService.GetAllWorkPreferencesAsync();
+                model.WorkTypes = workTypesResponse.Data;
+                model.WorkPreferences = workPreferencesResponse.Data;
                 model.Companies = getAllCompaniesResponse.Data;
                 model.Criterions.EducationLevels = educationLevelsResponse.Data;
                 model.Criterions.Experiences = experiencesResponse.Data;
@@ -111,25 +116,30 @@ namespace JobEntry.Web.Areas.Admin.Controllers
         {
            var response =  await _jobService.GetJobAsync(Guid.Parse(id));
            var mappedJob = _mapper.Map<UpdateJobDto>(response.Data);
-           if(response.Data.Criterion is not null)
+            if (response.Data.Criterion is not null)
             {
-                mappedJob.SelectedMilitaryStatusIds = response.Data.Criterion.MilitaryStatuses.Select(x => x.Id).ToArray();
-                mappedJob.SelectedDrivingLicenseIds = response.Data.Criterion.DrivingLicenses.Select(x => x.Id).ToArray();
-                mappedJob.SelectedEducationLevelIds = response.Data.Criterion.EducationLevels.Select(x => x.Id).ToArray();
-                mappedJob.SelectedExperienceIds = response.Data.Criterion.Experiences.Select(x => x.Id).ToArray();
+                mappedJob.SelectedMilitaryStatusIds = response.Data.Criterion.CriterionMilitaryStatuses.Select(x => x.MilitaryStatusId).ToArray();
+                mappedJob.SelectedDrivingLicenseIds = response.Data.Criterion.CriterionDrivingLicenses.Select(x => x.DrivingLicenseId).ToArray();
+                mappedJob.SelectedEducationLevelIds = response.Data.Criterion.CriterionEducationLevels.Select(x => x.EducationLevelId).ToArray();
+                mappedJob.SelectedExperienceIds = response.Data.Criterion.CriterionExperiences.Select(x => x.ExperienceId).ToArray();
             }
-           var companiesData= await _companyService.GetAllCompaniesAsync();
+            else mappedJob.Criterions = new CriterionListDto();
+
+
+            var companiesData= await _companyService.GetAllCompaniesAsync();
            var drivingLicensesResponse = await _criterionService.GetAllDrivingLicensesAsync();
            var educationLevelsResponse = await _criterionService.GetAllEducationLevelsAsync();
            var militaryStatusesResponse = await _criterionService.GetAllMilitaryStatusesAsync();
            var experiencesResponse = await _criterionService.GetAllExperienceAsync();
-           var workTypes = await _criterionService.GetAllWorkTypesAsync();
-           mappedJob.WorkTypes = workTypes.Data;
+           var workTypesResponse = await _criterionService.GetAllWorkTypesAsync();
+           var workPreferencesResponse = await _criterionService.GetAllWorkPreferencesAsync();
+           mappedJob.WorkTypes = workTypesResponse.Data;
+           mappedJob.WorkPreferences = workPreferencesResponse.Data;
            mappedJob.Companies = companiesData.Data;
-           mappedJob.Criterions.EducationLevels = educationLevelsResponse.Data;
-           mappedJob.Criterions.Experiences = experiencesResponse.Data;
-           mappedJob.Criterions.MilitaryStatuses = militaryStatusesResponse.Data;
-           mappedJob.Criterions.DrivingLicenses = drivingLicensesResponse.Data;
+            mappedJob.Criterions.EducationLevels = educationLevelsResponse.Data;
+            mappedJob.Criterions.Experiences = experiencesResponse.Data;
+            mappedJob.Criterions.MilitaryStatuses = militaryStatusesResponse.Data;
+            mappedJob.Criterions.DrivingLicenses = drivingLicensesResponse.Data;
 
             return View(mappedJob);
         }
@@ -142,8 +152,10 @@ namespace JobEntry.Web.Areas.Admin.Controllers
                 result.AddToModelState(this.ModelState);
                 var getAllCompaniesResponse = await _companyService.GetAllCompaniesAsync();
                 var getAllWorkTypesResponse = await _criterionService.GetAllWorkTypesAsync();
+                var getAllWorkPreferencesResponse = await _criterionService.GetAllWorkPreferencesAsync();
                 model.Companies = getAllCompaniesResponse.Data;
                 model.WorkTypes = getAllWorkTypesResponse.Data;
+                model.WorkPreferences = getAllWorkPreferencesResponse.Data;
                 return View(model);
 
             }

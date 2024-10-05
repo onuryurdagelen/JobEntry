@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JobEntry.Entity.DTOs.Criterion
+namespace JobEntry.Entity.DTOs.Criterions
 {
     public class CriterionDto
     {

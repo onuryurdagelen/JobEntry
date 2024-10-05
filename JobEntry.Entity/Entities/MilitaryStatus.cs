@@ -12,7 +12,7 @@ namespace JobEntry.Entity.Entities
         public Guid Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<Criterion> Criterions { get; set; } = new List<Criterion>();
+        public ICollection<CriterionMilitaryStatus> CriterionMilitaryStatuses { get; set; } = new List<CriterionMilitaryStatus>();
 
     }
 }

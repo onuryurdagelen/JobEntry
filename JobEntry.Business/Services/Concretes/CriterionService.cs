@@ -108,6 +108,11 @@ namespace JobEntry.Business.Services.Concretes
             var workTypes = await _unitOfWork.GetRepository<WorkType>().GetAllAsync();
             return new ServiceResponse<List<WorkType>> { Data = workTypes, StatusCode = 200, Success = true };
         }
+        public async Task<ServiceResponse<List<WorkPreference>>> GetAllWorkPreferencesAsync()
+        {
+            var workPreferences = await _unitOfWork.GetRepository<WorkPreference>().GetAllAsync();
+            return new ServiceResponse<List<WorkPreference>> { Data = workPreferences, StatusCode = 200, Success = true };
+        }
 
         public async Task<ServiceResponse<QualificationDto>> GetQualificationAsync(string qId, string jobId)
         {
@@ -120,5 +125,6 @@ namespace JobEntry.Business.Services.Concretes
             var responsibility = await _unitOfWork.GetRepository<Responsibility>().GetAsync(predicate: x => x.Id == Guid.Parse(rId));
             return new ServiceResponse<ResponsibilityDto>(true, _mapper.Map<ResponsibilityDto>(responsibility));
         }
+        
     }
 }

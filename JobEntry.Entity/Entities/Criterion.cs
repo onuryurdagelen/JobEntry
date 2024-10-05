@@ -10,10 +10,11 @@ namespace JobEntry.Entity.Entities
     public class Criterion:IBaseEntity
     {
         public Guid Id { get; set; }
-        public ICollection<Experience> Experiences { get; set; } = new List<Experience>();
-        public ICollection<EducationLevel> EducationLevels { get; set; } = new List<EducationLevel>();
-        public ICollection<MilitaryStatus> MilitaryStatuses { get; set; } = new List<MilitaryStatus>();
-        public ICollection<DrivingLicense> DrivingLicenses { get; set; } = new List<DrivingLicense>();
+        public ICollection<CriterionDrivingLicense> CriterionDrivingLicenses { get; set; } = new List<CriterionDrivingLicense>();
+        public ICollection<CriterionEducationLevel> CriterionEducationLevels { get; set; } = new List<CriterionEducationLevel>();
+        public ICollection<CriterionExperience> CriterionExperiences { get; set; } = new List<CriterionExperience>();
+        public ICollection<CriterionMilitaryStatus> CriterionMilitaryStatuses { get; set; } = new List<CriterionMilitaryStatus>();
+
 
     }
 }

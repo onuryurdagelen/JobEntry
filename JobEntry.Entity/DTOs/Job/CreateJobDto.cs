@@ -1,5 +1,4 @@
 ﻿using JobEntry.Entity.DTOs.Company;
-using JobEntry.Entity.DTOs.Criterion;
 using JobEntry.Entity.DTOs.Criterions;
 using JobEntry.Entity.DTOs.Qualification;
 using JobEntry.Entity.DTOs.Responsibility;
@@ -25,6 +24,8 @@ namespace JobEntry.Entity.DTOs.Job
       
         public Guid CompanyId { get; set; }
         public Guid WorkTypeId { get; set; }
+        public Guid WorkPreferenceId { get; set; }
+        public Guid? CriterionId { get; set; }
 
         public Guid[] SelectedDrivingLicenseIds { get; set; }
         public Guid[] SelectedExperienceIds { get; set; }
@@ -32,6 +33,7 @@ namespace JobEntry.Entity.DTOs.Job
         public Guid[] SelectedMilitaryStatusIds { get; set; }
 
         public CriterionListDto Criterions { get; set; } = new CriterionListDto();
+        public Criterion Criterion { get; set; }
 
         public QualificationDto? Qualification { get; set; }
         public ResponsibilityDto? Responsibility { get; set; }
@@ -42,6 +44,7 @@ namespace JobEntry.Entity.DTOs.Job
 
         public IList<CompanyDto>? Companies { get; set; }
         public IList<WorkType>? WorkTypes { get; set; }
+        public IList<WorkPreference>? WorkPreferences { get; set; }
 
 
     }
