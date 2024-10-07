@@ -2,7 +2,6 @@
 using JobEntity.DataAccess.UnitOfWorks;
 using JobEntry.Business.Helpers.Images;
 using JobEntry.Business.Utilities.Responses;
-using JobEntry.Entity.DTOs.Company;
 using JobEntry.Entity.DTOs.User;
 using JobEntry.Entity.Entities;
 using Microsoft.AspNetCore.Http;

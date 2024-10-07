@@ -16,9 +16,6 @@ namespace JobEntry.Business
 		public static IServiceCollection LoadBusinessServices(this IServiceCollection services)
 		{
 
-			services.AddScoped<ICompanyService, CompanyService>();
-			services.AddScoped<IJobService, JobService>();
-			services.AddScoped<ICriterionService, CriterionService>();
             services.AddScoped<IImageHelper,ImageHelper>();
 			services.AddScoped<UserService>();
 			services.AddScoped<RoleService>();
@@ -30,7 +27,7 @@ namespace JobEntry.Business
 
 			services.AddFluentValidation(options =>
 			{
-				options.RegisterValidatorsFromAssemblyContaining<JobValidator>();
+				options.RegisterValidatorsFromAssemblyContaining<ProductValidator>();
 				options.DisableDataAnnotationsValidation = true;
 				options.ValidatorOptions.LanguageManager.Culture = new System.Globalization.CultureInfo("en-US");
 

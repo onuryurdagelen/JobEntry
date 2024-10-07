@@ -14,32 +14,26 @@ namespace JobEntity.DataAccess.Context
 {
 	public class AppDbContext:IdentityDbContext<AppUser,AppRole,Guid,AppUserClaim,AppUserRole,AppUserLogin,AppRoleClaim,AppUserToken>
 	{
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Job> Jobs { get; set; }
+
+
+        //Add-Migration InitialCreate -Project SqlServer
+        #region EShopper Tables
         public DbSet<Image> Images { get; set; }
-        public DbSet<Qualification> Qualifications { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<ProductProperty> ProductProperties { get; set; }
+        public DbSet<Property> Properties { get; set; }
+        public DbSet<Information> Informations { get; set; }
+        public DbSet<Instruction> Instructions { get; set; }
+        public DbSet<Wish> Wishes { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
-        public DbSet<Applicant> Applicants { get; set; }
-        public DbSet<Employer> Employers { get; set; }
 
-        public DbSet<Responsibility> Responsibilities { get; set; }
-        public DbSet<WorkType> WorkTypes { get; set; }
-        public DbSet<WorkPreference> WorkPreferences { get; set; }
-        public DbSet<DrivingLicense> DrivingLicences { get; set; }
-        public DbSet<MilitaryStatus> MilitaryStatuses { get; set; }
-        public DbSet<Experience> Experiences { get; set; }
-        public DbSet<Criterion> Criterions { get; set; }
-        public DbSet<CriterionDrivingLicense> CriterionDrivingLicenses { get; set; }
-        public DbSet<CriterionEducationLevel> CriterionEducationLevels { get; set; }
-        public DbSet<CriterionExperience> CriterionExperiences { get; set; }
-        public DbSet<CriterionMilitaryStatus> CriterionMilitaryStatuses { get; set; }
-        public DbSet<JobLanguage> JobLanguages { get; set; }
-        public DbSet<Position> Positions { get; set; }
-        public DbSet<EducationLevel> EducationLevels { get; set; }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<PositionLevel> PositionLevels { get; set; }
-        public DbSet<Sector> Sectors { get; set; }
-        public DbSet<LocationType> LocationTypes { get; set; }
+
+        #endregion
 
 
 

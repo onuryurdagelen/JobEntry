@@ -14,8 +14,9 @@ namespace JobEntity.DataAccess.Mappings
 	{
 		public void Configure(EntityTypeBuilder<AppUser> builder)
 		{
-			builder.Property(x => x.FullName).HasComputedColumnSql("[FirstName] + ' ' + [LastName]");
-			
-		}
+			builder.Property(x => x.FullName)
+            .HasComputedColumnSql("\"FirstName\" || ' ' || \"LastName\"", stored: true);
+
+        }
 	}
 }

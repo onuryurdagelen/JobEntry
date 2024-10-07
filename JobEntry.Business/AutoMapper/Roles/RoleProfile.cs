@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using JobEntry.Entity.DTOs.Job;
 using JobEntry.Entity.DTOs.Role;
 using JobEntry.Entity.Entities;
 using System;

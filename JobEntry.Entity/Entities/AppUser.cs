@@ -35,17 +35,12 @@ namespace JobEntry.Entity.Entities
 		public string FullName { get; set; }
         public Guid? ImageId { get; set; }
         public Image? Image { get; set; }
+        public Cart? Cart { get; set; }
+
     }
 
-    public class Employer: AppUser
+    public class Customer: AppUser
 	{
-        public Guid? CompanyId { get; set; }
-        public Company? Company { get; set; }
     }
-    public class Applicant:AppUser
-    {
-
-        //Aday kullanıcısının birden fazla başvurduğu iş olabilir.
-        public ICollection<Job> Jobs { get; set; } = new List<Job>();
-    }
+  
 }

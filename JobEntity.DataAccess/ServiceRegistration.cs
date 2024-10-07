@@ -20,12 +20,36 @@ namespace JobEntity.DataAccess
 	{
 		public static IServiceCollection LoadDataAccessServices(this IServiceCollection services, IConfiguration configuration) 
 		{
+
 			services.AddDbContext<AppDbContext>(options =>
 			{
-				options.UseSqlServer(configuration.GetConnectionString("SqlServer"),option =>
+
+				switch (configuration.GetSection("DbProvider").Value)
 				{
-					option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
-				});
+                    case "NpgSql":
+						options.UseNpgsql(configuration.GetConnectionString("Npgsql"), config =>
+						{
+							config.MigrationsAssembly("PostgreSql");
+						});
+						AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+                        break;
+                    case "SqlServer":
+                        options.UseSqlServer(configuration.GetConnectionString("SqlServer"), config =>
+                        {
+                            config.MigrationsAssembly("SqlServer");
+                        });
+                        break;
+                        
+                    default:
+                        options.UseSqlServer(configuration.GetConnectionString("SqlServer"), config =>
+                        {
+                            config.MigrationsAssembly("SqlServer");
+                        });
+                        break;
+                }
+
+
+				
 				options.EnableSensitiveDataLogging();
 			});
 			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

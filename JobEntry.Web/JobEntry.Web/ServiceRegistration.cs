@@ -2,7 +2,9 @@
 using JobEntry.Business.Services.Concretes;
 using JobEntry.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using NToastNotify;
+using Microsoft.AspNetCore.Authentication.OAuth;
 
 namespace JobEntry.Web
 {
@@ -11,6 +13,20 @@ namespace JobEntry.Web
         public static IServiceCollection LoadMvcServices(this IServiceCollection services,IConfiguration configuration)
         {
 			services.AddScoped<ViewRenderService>();
+
+            services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = configuration["Authentication:Facebook:Id"];
+                options.AppSecret = configuration["Authentication:Facebook:SecretKey"];
+				options.Scope.Add("email");
+
+            }).AddGoogle(options =>
+			{
+				options.ClientId = configuration["Authentication:Google:Id"];
+				options.ClientSecret = configuration["Authentication:Google:SecretKey"];
+            });
+
+
             //Identity Configuration
             services.AddIdentity<AppUser, AppRole>(options =>
 			{
@@ -25,6 +41,7 @@ namespace JobEntry.Web
 			}).AddRoleManager<RoleManager<AppRole>>()
 			.AddEntityFrameworkStores<AppDbContext>()
 			.AddDefaultTokenProviders();
+
 
 			services.ConfigureApplicationCookie(config =>
 			{
@@ -47,6 +64,9 @@ namespace JobEntry.Web
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+			
+
 
             return services;
         }

@@ -1,9 +1,11 @@
 ﻿using JobEntry.Entity.DTOs.Auth;
 using JobEntry.Entity.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using JobEntry.Business.Extensions;
 using System.Security.Claims;
 
 namespace JobEntry.Web.Areas.Admin.Controllers
@@ -20,10 +22,46 @@ namespace JobEntry.Web.Areas.Admin.Controllers
 			_signInManager = signInManager;
 		}
 		[HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl)
 		{
 			return View();
 		}
+		public async Task<IActionResult> ExternalResponse(string ReturnUrl = "/")
+		{
+			ExternalLoginInfo loginInfo = await _signInManager.GetExternalLoginInfoAsync();
+			if (loginInfo == null) return RedirectToAction("Login");
+
+			Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, true);
+
+			if(result.Succeeded) return Redirect(ReturnUrl);
+
+			AppUser user = new AppUser();
+			user.Email = loginInfo.Principal.FindFirstValue(ClaimTypes.Email);
+			string externalUserId = loginInfo.Principal.FindFirst(ClaimTypes.NameIdentifier).Value;
+			if (loginInfo.Principal.HasClaim(x => x.Type == ClaimTypes.Name))
+			{
+                string userName = loginInfo.Principal.FindFirst(ClaimTypes.Name).Value;
+				userName = userName.Replace(' ', '_').ToLower() +'_'+ externalUserId.Substring(0, 5).ToString();
+				user.FirstName = loginInfo.Principal.FindFirst(ClaimTypes.GivenName).Value;
+				user.LastName = loginInfo.Principal.FindFirst(ClaimTypes.Surname).Value;
+                user.UserName = userName;
+            }
+			IdentityResult createResult = await _userManager.CreateAsync(user);
+
+			if(createResult.Succeeded)
+			{
+				IdentityResult loginResult = await _userManager.AddLoginAsync(user, loginInfo);
+				if(loginResult.Succeeded)
+				{
+                    await _signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider,loginInfo.ProviderKey,true);
+					return Redirect(ReturnUrl);
+                }
+				IdentityResultExtension.AddToModelState(loginResult, this.ModelState);
+
+            }
+            return RedirectToAction("Login");
+        }
+		
 		[AllowAnonymous]
 		[HttpPost]
 		public async Task<IActionResult> Login(UserLoginDto model)
@@ -59,7 +97,25 @@ namespace JobEntry.Web.Areas.Admin.Controllers
             }
 			return View();
 		}
-		[Authorize]
+		[HttpGet]
+		public IActionResult FacebookLogin(string ReturnUrl)
+		{
+			string RedirectUrl = Url.Action("ExternalResponse", "Auth", new {ReturnUrl = ReturnUrl});
+			AuthenticationProperties properties =  _signInManager.ConfigureExternalAuthenticationProperties("Facebook",redirectUrl: RedirectUrl);
+
+
+			return new ChallengeResult("Facebook", properties);
+		}
+        [HttpGet]
+        public IActionResult GoogleLogin(string ReturnUrl)
+        {
+            string RedirectUrl = Url.Action("ExternalResponse", "Auth", new { ReturnUrl = ReturnUrl });
+            AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl: RedirectUrl);
+
+
+            return new ChallengeResult("Google", properties);
+        }
+        [Authorize]
 		[HttpGet]
 		public async Task<IActionResult> Logout()
 		{

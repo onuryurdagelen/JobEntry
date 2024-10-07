@@ -7,11 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobEntry.Web", "JobEntry.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobEntry.Entity", "JobEntry.Entity\JobEntry.Entity.csproj", "{0977B322-0C5B-4E78-8C0B-D1A46AFE887E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobEntity.DataAccess", "JobEntity.DataAccess\JobEntity.DataAccess.csproj", "{C5D23A8D-F0E0-47FE-BDA1-7116D9547F47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobEntity.DataAccess", "JobEntity.DataAccess\JobEntity.DataAccess.csproj", "{C5D23A8D-F0E0-47FE-BDA1-7116D9547F47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobEntry.Business", "JobEntry.Business\JobEntry.Business.csproj", "{60460FA3-860F-454E-918F-1375FCAE71FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobEntry.Business", "JobEntry.Business\JobEntry.Business.csproj", "{60460FA3-860F-454E-918F-1375FCAE71FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobEntry.Core", "JobEntry.Core\JobEntry.Core.csproj", "{E7328561-7936-4286-AB7A-426D4C728B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobEntry.Core", "JobEntry.Core\JobEntry.Core.csproj", "{E7328561-7936-4286-AB7A-426D4C728B8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{C832ED17-72E7-472E-A881-E00A080D415C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer", "Migrations\SqlServer\SqlServer.csproj", "{D7D441E3-F83A-4399-AA9A-CBFCDBCA303A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSql", "Migrations\PostgreSql\PostgreSql.csproj", "{9C4040FF-3E37-4294-A9DC-2F2F1CC16650}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +45,21 @@ Global
 		{E7328561-7936-4286-AB7A-426D4C728B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7328561-7936-4286-AB7A-426D4C728B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7328561-7936-4286-AB7A-426D4C728B8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D441E3-F83A-4399-AA9A-CBFCDBCA303A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D441E3-F83A-4399-AA9A-CBFCDBCA303A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D441E3-F83A-4399-AA9A-CBFCDBCA303A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D441E3-F83A-4399-AA9A-CBFCDBCA303A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C4040FF-3E37-4294-A9DC-2F2F1CC16650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C4040FF-3E37-4294-A9DC-2F2F1CC16650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C4040FF-3E37-4294-A9DC-2F2F1CC16650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C4040FF-3E37-4294-A9DC-2F2F1CC16650}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D7D441E3-F83A-4399-AA9A-CBFCDBCA303A} = {C832ED17-72E7-472E-A881-E00A080D415C}
+		{9C4040FF-3E37-4294-A9DC-2F2F1CC16650} = {C832ED17-72E7-472E-A881-E00A080D415C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99BA54C3-25C8-4CD5-B4F8-F933BAF8A67B}

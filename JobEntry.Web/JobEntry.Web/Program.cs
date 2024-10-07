@@ -12,6 +12,9 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.LoadMvcServices(builder.Configuration);
+builder.Services.LoadDataAccessServices(builder.Configuration);
+builder.Services.LoadBusinessServices();
 // Add services to the container.
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation()
@@ -28,9 +31,7 @@ builder.Services.AddControllersWithViews()
 		TimeOut =3000,
         PositionClass = ToastPositions.TopRight
     });
-builder.Services.LoadMvcServices(builder.Configuration);
-builder.Services.LoadDataAccessServices(builder.Configuration);
-builder.Services.LoadBusinessServices();
+
 
 var app = builder.Build();
 

@@ -23,8 +23,13 @@ namespace JobEntry.Entity.Entities
 
         public string FileName { get; set; }
         public string FileType { get; set; }
+     
 
 
-
+    }
+    public class ProductImage : Image
+    {
+        public Guid? ProductId { get; set; }
+        public Product Product { get; set; }
     }
 }

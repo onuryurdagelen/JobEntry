@@ -2,6 +2,10 @@
 using JobEntry.Business.Bases;
 using JobEntry.Business.Utilities.Responses;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.DependencyInjection;
 using SendGrid.Helpers.Errors.Model;
 using System;
 using System.Collections.Generic;
@@ -25,37 +29,40 @@ namespace JobEntry.Business.Exceptions
 				await HandleExceptionAsync(context, ex);
 			}
 		}
-		private static Task HandleExceptionAsync(HttpContext context, Exception ex)
+		private Task HandleExceptionAsync(HttpContext context, Exception ex)
 		{
 			int statusCode = GetStatusCode(ex);
 			context.Response.ContentType = "application/json";
 			context.Response.StatusCode = statusCode;
-			ServiceResponse<EmptyResponse> apiResponse = new ServiceResponse<EmptyResponse>();
 
+            if (ex.GetType() == typeof(ValidationException))
 
-			if (ex.GetType() == typeof(ValidationException))
+                return context.Response.WriteAsync(new ServiceResponse<EmptyResponse>()
+                {
+                    Success = false,
+                    Errors = ((ValidationException)ex).Errors.Select(x => x.ErrorMessage).ToList(),
+                    StatusCode = statusCode
+                }.ToString());
 
-				return context.Response.WriteAsync(new ServiceResponse<EmptyResponse>()
-				{
-					Success = false,
-					Errors = ((ValidationException)ex).Errors.Select(x => x.ErrorMessage).ToList(),
-					StatusCode = statusCode
-				}.ToString());
+            List<string> errors = new List<string>()
+            {
+                ex.Message,
+            };
+            return context.Response.WriteAsync(new ServiceResponse<EmptyResponse>()
+            {
+                Success = false,
+                Errors = errors,
+                StatusCode = statusCode
+            }.ToString());
 
-			List<string> errors = new List<string>()
-			{
-				ex.Message,
-			};
-			return context.Response.WriteAsync(new ServiceResponse<EmptyResponse>()
-			{
-				Success = false,
-				Errors = errors,
-				StatusCode = statusCode
-			}.ToString());
+        }
+        private bool IsApiRequest(HttpContext context)
+        {
+            return context.Request.Path.StartsWithSegments("/api") ||
+                   context.Request.Headers["Accept"].ToString().Contains("application/json");
+        }
 
-		}
-
-		private static int GetStatusCode(Exception ex) =>
+        private static int GetStatusCode(Exception ex) =>
 			ex switch
 			{
 				BaseException => StatusCodes.Status400BadRequest,
